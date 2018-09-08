@@ -2,17 +2,54 @@
 
 
 
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Dependencies -->
+
+<script>
+destroy = function() {
+  $('#q').val('');
+  $('#results').empty();
+}
+
+$(function() {
+  $('#results').mouseleave(function() {
+    destroy();
+  });
+});
+
+myHandler = function() {
+  var CSRF_TOKEN = <%= raw Poison.encode!(Plug.CSRFProtection.get_csrf_token()) %>;
+  if ($("#searchbox").val() != "") {
+    $.ajax({
+      url: "/query",
+      type: "POST",
+      dataType: "json",
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("X-CSRF-Token", CSRF_TOKEN);
+      },
+      data: {query: $("#searchbox").val(), queryTime: (new Date).toTimeString().slice(0,8)}
+    }).done(function(data) {
+        console.log(data)
+    });
+  }
+}
+
+</script>
+
 <!------ Include the above in your HEAD tag ---------->
+
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <div class="container">
     <br/>
 
-    <h1 style="text-align: center;">
-      ResearchBrowser
+    <h1 style="text-align: center; font-family: Helvetica Neue;">
+      Research Browser
     </h1>
 	<div class="row justify-content-center">
                         <div class="col-12 col-md-10 col-lg-8">
@@ -23,11 +60,10 @@
                                     </div>
                                     <!--end of col-->
                                     <div class="col">
-                                        <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords">
+                                        <input id="searchbox" name="searchbox" onKeyUp="myHandler()" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search by co-author, research concepts, or by publish date.">
                                     </div>
                                     <!--end of col-->
                                     <div class="col-auto">
-                                        <button class="btn btn-lg btn-success" type="submit">Search</button>
                                     </div>
                                     <!--end of col-->
                                 </div>
@@ -56,7 +92,3 @@
       </div>
   </div>
 -->
-
-<!-- Dependencies -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Knob/1.2.13/jquery.knob.min.js"></script>

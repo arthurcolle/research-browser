@@ -20,23 +20,27 @@ import "phoenix_html"
 
 import socket from "./socket"
 
-function getCSRFToken() {
-    var cookieValue = null;
-    if (document.cookie && document.cookie != '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            if (cookie.substring(0, 10) == ('csrftoken' + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(10));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
+// function getCSRFToken() {
+//     var cookieValue = null;
+//     if (document.cookie && document.cookie != '') {
+//         var cookies = document.cookie.split(';');
+//         for (var i = 0; i < cookies.length; i++) {
+//             var cookie = jQuery.trim(cookies[i]);
+//             if (cookie.substring(0, 10) == ('csrftoken' + '=')) {
+//                 cookieValue = decodeURIComponent(cookie.substring(10));
+//                 break;
+//             }
+//         }
+//     }
+//     return cookieValue;
+// }
 
 // const flatten = (arr,depth=1) =>
 //   arr.reduce((a,v)) =>
 //     a.concat(depth > 1 && Array.isArray(v) ? flatten(v, depth - 1) : v), []);
 
 // This is some ES6. It is a nice little recursive function defined using the newest syntax thats available in ES6.
+  // 
+  // $("#target").keyup(function(){
+  //   console.log("yo");
+  // })

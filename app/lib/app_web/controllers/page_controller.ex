@@ -5,7 +5,7 @@ defmodule AppWeb.PageController do
     render conn, "index.html"
   end
 
-  def query(conn, _params) do
-    render conn, "{var hello=15;}"
+  def query(conn, params) do
+    render conn, "index.html", params: params
   end
 end
