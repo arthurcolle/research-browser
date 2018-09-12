@@ -17,7 +17,8 @@ defmodule AppWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    post "/query", PageController, :query
+    get "/products", PageController, :products
+    post "/q", SearchController, :query
   end
 
   # Other scopes may use custom stacks.

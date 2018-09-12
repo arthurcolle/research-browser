@@ -7,21 +7,22 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>collégroup</title>
+    <title>Research Browser</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
   <body>
       <header class="header">
+        <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+        <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
-            <li><a href="/products">Products</a></li>
+            <li><a href="/products">Related Apps</a></li>
           </ul>
         </nav>
       </header>
 
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
       <main role="main">
         <%= render @view_module, @view_template, assigns %>

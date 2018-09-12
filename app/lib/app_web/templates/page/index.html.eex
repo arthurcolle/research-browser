@@ -1,10 +1,5 @@
 <link href='https://fonts.googleapis.com/css?family=Raleway:600,700' rel='stylesheet' type='text/css'>
-
-
-
-
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
@@ -16,17 +11,11 @@ destroy = function() {
   $('#results').empty();
 }
 
-$(function() {
-  $('#results').mouseleave(function() {
-    destroy();
-  });
-});
-
-myHandler = function() {
-  var CSRF_TOKEN = <%= raw Poison.encode!(Plug.CSRFProtection.get_csrf_token()) %>;
+searchHandler = function() {
+  var csrf_token = <%= raw Poison.encode!(Plug.CSRFProtection.get_csrf_token()) %>;
   if ($("#searchbox").val() != "") {
     $.ajax({
-      url: "/query",
+      url: "/q",
       type: "POST",
       dataType: "json",
       beforeSend: function(xhr) {
@@ -34,61 +23,47 @@ myHandler = function() {
       },
       data: {query: $("#searchbox").val(), queryTime: (new Date).toTimeString().slice(0,8)}
     }).done(function(data) {
-        console.log(data)
+      $('#q').val('');
+      $('#results').empty();
+
+      for( var i = 0; i < data.length; i++) {
+        var object = data[i];
+      }
     });
   }
 }
+$(function() {
+  $('#results').mouseleave(function() {
+    destroy();
+  });
+});
 
 </script>
-
-<!------ Include the above in your HEAD tag ---------->
-
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <div class="container">
     <br/>
 
-    <h1 style="text-align: center; font-family: Helvetica Neue;">
-      Research Browser
-    </h1>
+  <h1 style="text-align: center; font-family: Helvetica Neue;">Research Browser</h1>
 	<div class="row justify-content-center">
-                        <div class="col-12 col-md-10 col-lg-8">
-                            <form class="card card-sm">
-                                <div class="card-body row no-gutters align-items-center">
-                                    <div class="col-auto">
-                                        <i class="fas fa-search h4 text-body"></i>
-                                    </div>
-                                    <!--end of col-->
-                                    <div class="col">
-                                        <input id="searchbox" name="searchbox" onKeyUp="myHandler()" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search by co-author, research concepts, or by publish date.">
-                                    </div>
-                                    <!--end of col-->
-                                    <div class="col-auto">
-                                    </div>
-                                    <!--end of col-->
-                                </div>
-                            </form>
-                        </div>
-                        <!--end of col-->
-                    </div>
-</div>
-<!--
+    <div class="col-12 col-md-10 col-lg-8">
+      <form class="card card-sm">
+        <div class="card-body row no-gutters align-items-center">
+        <div class="col-auto">
+          <i class="fas fa-search h4 text-body"></i>
+        </div>
+        <!--end of col-->
+        <div class="col">
+          <input id="q" name="q" onKeyUp="searchHandler()" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search by co-author, research concepts, or by publish date.">
+        </div>
 
-
-  <div class="demo">
-      <div class="rings">
-          <div class="h" style="">
-              <input class="knob hour" data-min="0" data-max="1440" data-readOnly="true" data-bgColor="#333" data-fgColor="#508491" data-displayInput=false data-width="500" data-height="500" data-thickness=".25">
-          </div>
-          <div class="m" style="">
-              <input class="knob minute" data-min="0" data-max="3600" data-readOnly="true" data-bgColor="#333" data-fgColor="#90CEDE" data-displayInput=false data-width="350" data-height="350" data-thickness=".4">
-          </div>
-          <div class="s" style="">
-              <input class="knob second" data-min="0" data-max="60000" data-readOnly="true" data-bgColor="#333" data-fgColor="#BFF2FF" data-displayInput=false data-width="194" data-height="194" data-thickness=".2">
-          </div>
-          <div class="clock" style="">
-              <span class="hour"></span>:<span class="minute"></span>:<span class="second"></span>
-          </div>
+        <!--end of col-->
+        <div class="col-auto"></div>
+        <!--end of col-->
       </div>
+    </form>
   </div>
--->
+<!--end of col-->
+</div>
+
+<div class="results"></div>
