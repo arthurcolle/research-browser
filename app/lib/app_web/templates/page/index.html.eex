@@ -27,7 +27,7 @@ searchHandler = function() {
       $('#results').empty();
 
       for( var i = 0; i < data.length; i++) {
-        var object = data[i];
+        console.log(data[i]);
       }
     });
   }
