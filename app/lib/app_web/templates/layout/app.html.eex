@@ -14,9 +14,13 @@
   <body>
       <header class="header">
         <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-        <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+        <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p
 
         <nav role="navigation">
+          <ul class="nav nav-pills pull-left">
+            <li><a href="/products">Research Browser</a></li>
+          </ul>
+
           <ul class="nav nav-pills pull-right">
             <li><a href="/products">Related Apps</a></li>
           </ul>
